@@ -1,0 +1,79 @@
+version: '2'
+services:
+  haproxy:
+    build:
+      context: ./docker-compose
+      dockerfile: Dockerfile-haproxy
+    depends_on:
+      - "awx_1"
+      - "awx_2"
+      - "awx_3"
+    ports:
+      - "8013:8013"
+      - "8043:8043"
+      - "1936:1936"
+      - "5555:5555"
+      - "15672:15672"
+  awx_1:
+    privileged: true
+    image: ${DEV_DOCKER_TAG_BASE}/awx_devel:${TAG}
+    hostname: awx_1
+    environment:
+      RABBITMQ_HOST: rabbitmq_1
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_VHOST: /
+      CELERY_RDB_HOST: 0.0.0.0
+      AWX_GROUP_QUEUES: alpha,tower
+    volumes:
+      - "../:/awx_devel"
+
+  awx_2:
+    privileged: true
+    image: ${DEV_DOCKER_TAG_BASE}/awx_devel:${TAG}
+    hostname: awx_2
+    environment:
+      RABBITMQ_HOST: rabbitmq_2
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_VHOST: /
+      CELERY_RDB_HOST: 0.0.0.0
+      AWX_GROUP_QUEUES: bravo,tower
+    volumes:
+      - "../:/awx_devel"
+  awx_3:
+    privileged: true
+    image: ${DEV_DOCKER_TAG_BASE}/awx_devel:${TAG}
+    hostname: awx_3
+    environment:
+      RABBITMQ_HOST: rabbitmq_3
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_VHOST: /
+      CELERY_RDB_HOST: 0.0.0.0
+      AWX_GROUP_QUEUES: charlie,tower
+    volumes:
+      - "../:/awx_devel"
+  rabbitmq_1:
+    image: ${DEV_DOCKER_TAG_BASE}/rabbit_cluster_node:latest
+    hostname: rabbitmq_1
+  rabbitmq_2:
+    image: ${DEV_DOCKER_TAG_BASE}/rabbit_cluster_node:latest
+    hostname: rabbitmq_2
+    environment: 
+      - CLUSTERED=true
+      - CLUSTER_WITH=rabbitmq_1
+  rabbitmq_3:
+    image: ${DEV_DOCKER_TAG_BASE}/rabbit_cluster_node:latest
+    hostname: rabbitmq_3
+    environment: 
+      - CLUSTERED=true
+      - CLUSTER_WITH=rabbitmq_1
+  postgres:
+    image: postgres:9.6
+  memcached:
+    image: memcached:alpine
+  logstash:
+    build:
+      context: ./docker-compose
+      dockerfile: Dockerfile-logstash

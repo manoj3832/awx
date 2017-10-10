@@ -1,0 +1,15 @@
+django-debug-toolbar==1.5
+pprofile
+ipython==5.2.1
+unittest2
+pep8
+flake8
+pyflakes
+pytest==2.9.2
+pytest-cov
+pytest-django
+pytest-pythonpath
+pytest-mock
+logutils
+flower
+uwsgitop

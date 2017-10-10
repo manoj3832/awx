@@ -1,0 +1,45 @@
+version: '3'
+services:
+  # Primary AWX Development Container
+  awx:
+    image: ${DEV_DOCKER_TAG_BASE}/awx_devel:${TAG}
+    hostname: awx
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_VHOST: /
+      CELERY_RDB_HOST: 0.0.0.0
+      AWX_GROUP_QUEUES: tower
+    ports:
+      - "8080:8080"
+      - "5555:5555"
+      - "8013:8013"
+      - "8043:8043"
+      - "6899-6999:6899-6999"  # default port range for celery.contrib.rdb
+    links:
+      - postgres
+      - memcached
+      - rabbitmq
+      - logstash
+    #   - sync
+    # volumes_from:
+    #   - sync
+    volumes:
+      - "../:/awx_devel"
+    privileged: true
+  logstash:
+    build:
+      context: ./docker-compose
+      dockerfile: Dockerfile-logstash
+  # Postgres Database Container
+  postgres:
+    image: postgres:9.6
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11211:11211"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
