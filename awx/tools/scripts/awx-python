@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Enable Tower virtualenv
+if [ -f /var/lib/awx/venv/awx/bin/activate ]; then
+  . /var/lib/awx/venv/awx/bin/activate
+fi
+
+# Run the requested Python command, using the interpreter from the path
+exec python "$@"

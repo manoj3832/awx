@@ -1,0 +1,82 @@
+/** @define SmartStatus */
+
+.SmartStatus-container{
+    max-width: 165px;
+    display:flex;
+}
+
+.SmartStatus-iconContainer{
+    padding: 2px;
+    flex: 0 1 auto;
+}
+
+.SmartStatus--success{
+    color: @default-succ;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.SmartStatus--failed{
+    color: @default-err;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.SmartStatus--failed:before {
+    content: "\f06a";
+}
+
+.SmartStatus--running{
+    color: @default-icon;
+    margin-top: 10px;
+    padding: 0px;
+    .pulsate();
+}
+
+.SmartStatus-vertCenter{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.SmartStatus-tooltip{
+    text-align: left;
+    max-width: 250px;
+    padding: 10px;
+    line-height: 22px;
+}
+
+.SmartStatus-tooltip--successful,
+.SmartStatus-tooltip--success{
+    color: @default-succ;
+    padding-right: 0px;
+    text-shadow:
+        -1px -1px 0 @default-bg,
+        1px -1px 0 @default-bg,
+        -1px 1px 0 @default-bg,
+        1px 1px 0 @default-bg;
+
+}
+
+.SmartStatus-tooltip--error, .SmartStatus-tooltip--failed{
+    color: @default-err;
+    padding-right: 0px;
+    text-shadow:
+        -1px -1px 0 @default-bg,
+        1px -1px 0 @default-bg,
+        -1px 1px 0 @default-bg,
+        1px 1px 0 @default-bg;
+}
+
+.SmartStatus-tooltip--running{
+    color: @default-data-txt;
+    padding-right: 0px;
+    text-shadow:
+        -1px -1px 0 @default-bg,
+        1px -1px 0 @default-bg,
+        -1px 1px 0 @default-bg,
+        1px 1px 0 @default-bg;
+    .pulsate();
+}
