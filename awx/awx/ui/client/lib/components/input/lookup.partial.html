@@ -1,0 +1,27 @@
+<div class="col-sm-{{::col}} at-InputContainer">
+    <div class="form-group at-u-flat">
+        <at-input-label></at-input-label>
+
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn at-ButtonHollow--default at-Input-button"
+                        ng-disabled="state._disabled || form.disabled"
+                        ng-click="vm.lookup()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+            <input type="text"
+               class="form-control at-Input"
+               ng-class="{ 'at-Input--rejected': state._rejected }"
+               ng-model="state._displayValue"
+               ng-attr-tabindex="{{ tab || undefined }}"
+               ng-attr-placeholder="{{::state._placeholder || undefined }}"
+               ng-change="vm.searchOnInput()"
+               ng-disabled="state._disabled || form.disabled" />
+        </div>
+
+        <at-input-message></at-input-message>
+    </div>
+
+    <div ui-view="{{ state._resource }}"></div>
+</div>
