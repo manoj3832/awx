@@ -1,2 +1,0 @@
-certifi
-pycurl  # requires system package version
