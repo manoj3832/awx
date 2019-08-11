@@ -17,13 +17,13 @@ pipeline {
 
         stage('stage1') {
             steps {
-                echo "test1"
+                sh "uname -a"
             }
         }
 
         stage('stage2') {
             steps {
-                echo "test2" 
+                sh "uname -a" 
               
             }
         }
