@@ -17,13 +17,14 @@ pipeline {
 
         stage('stage1') {
             steps {
-                sh "echo stage1"
+                echo "test1"
             }
         }
 
         stage('stage2') {
             steps {
-                sh "echo stage1"
+                echo "test2" 
+              
             }
         }
     }
